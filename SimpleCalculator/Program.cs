@@ -35,6 +35,9 @@ namespace SimpleCalculator
                 else
                 {
                     Console.WriteLine("You asked me to calculate " + userRequest);
+                    Expression expression = new Expression();
+                    Console.WriteLine("The operator in this expression is " + expression.getOperator(userRequest));
+                    
                     counter = counter + 1;
                 }
 
