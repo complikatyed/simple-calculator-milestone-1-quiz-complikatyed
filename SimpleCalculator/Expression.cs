@@ -16,16 +16,21 @@ namespace SimpleCalculator
         public int convertedString { get; set; }
 
 
-       public string getOperator(string userRequest)
-       {
-            char[] chars = { '+', '-', '/', '%', '*'};
+        public int getOperatorIndex(string userRequest)
+        {
+            char[] chars = { '+', '-', '/', '%', '*' };
             // "Look for the index of any character in the above array"
-            int i = userRequest.IndexOfAny(chars);
-            // "Give me the character at the index you found
-            calcThing = userRequest[i].ToString();
+            int index = userRequest.IndexOfAny(chars);
+
+            return index;
+        }
+
+        public string getOperator(string userRequest)
+       {
+            // Run 'getOperatorIndex' and return the item at that index as a string
+            calcThing = userRequest[getOperatorIndex(userRequest)].ToString();
 
             //  DO I NEED TO CONVERT THIS IN ANY WAY FOR IT TO WORK AS AN OPERATOR?
-
             return calcThing;
        }
 
