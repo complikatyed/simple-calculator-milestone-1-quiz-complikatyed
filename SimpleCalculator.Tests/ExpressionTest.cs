@@ -17,12 +17,12 @@ namespace SimpleCalculator.Tests
             Assert.AreEqual("+", calcThing);
         }
 
-        [TestMethod]
-        public void LHSCanBeExtracted()
-        {
-            string lhs = expression.getLeft(testRequest1);
-            Assert.AreEqual("2", lhs);
-        }
+        //[TestMethod]
+        //public void LHSCanBeExtracted()
+        //{
+        //    string lhs = expression.getLeft(testRequest1);
+        //    Assert.AreEqual("2", lhs);
+        //}
 
         [TestMethod]
         public void RHSCanBeExtracted()
