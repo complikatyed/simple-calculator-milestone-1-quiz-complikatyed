@@ -34,40 +34,45 @@ namespace SimpleCalculator
             return calcThing;
        }
 
-       public int getLeft(string userRequest)
+       public string getLeft(string userRequest)
         {
-            // PLAN FOR THIS METHOD IS TO TAKE ALL THE CHARACTERS TO THE LEFT
-            // OF THE OPERATOR'S INDEX (FROM THE METHOD ABOVE) AND RETURN THEM
-            // -- WILL NEED TO TRIM ANY TRAILING WHITE SPACE BEFORE RETURN --
-            // **NOT** converting to int at this point in the process
-
-            // operator's index
-
+            // 'thatIndex' is the operator's index
             int thatIndex = getOperatorIndex(userRequest);
-            
+
+            // instantiate new string list for storing the left side operand
             List<string> myIntList = new List<string>();
 
-            for (var i = 0; i < getOperatorIndex(userRequest); i++ )
+            // iterate through the string (to index of operator) adding each number to the list
+            for (var i = 0; i < thatIndex; i++ )
             {
                 myIntList.Add(userRequest[i].ToString());
-                Console.WriteLine("Working: " + userRequest[i]);
             }
 
-            string newThingy = String.Concat(myIntList);
-            Console.WriteLine("Here's the string: " + newThingy);
-            Console.WriteLine("Here's the stripped string: " + newThingy.Trim());
-            int countString = newThingy.Count();
+            // concatenate the list into a string (with trailing white space trimmed)
+            string leftOperand = String.Concat(myIntList).Trim();
 
-            return countString;
+            return leftOperand;
         }
 
         public string getRight(string userRequest)
         {
-            // SIMLARLY, THE PLAN FOR THIS METHOD IS TO TAKE ALL THE CHARACTERS TO THE
-            // RIGHT OF THE OPERATOR'S INDEX (FROM THE METHOD ABOVE) AND RETURN THEM
-            // -- WILL NEED TO TRIM ANY LEADING WHITE SPACE --
-            // **NOT** converting to int at this point in the process
-            return rhs;
+            // 'thatIndex' is the operator's index
+            int thatIndex = getOperatorIndex(userRequest);
+
+            // instantiate new string list for storing the left side operand
+            List<string> myIntList = new List<string>();
+
+            // iterate through the string (to index of operator) adding each number to the list
+            for (var i = thatIndex + 1; i < userRequest.Length; i++)
+            {
+                myIntList.Add(userRequest[i].ToString());
+            }
+
+            // concatenate the list into a string (with trailing white space trimmed)
+            string rightOperand = String.Concat(myIntList).Trim();
+
+
+            return rightOperand;
         }
 
         public int convertString(string operand)
