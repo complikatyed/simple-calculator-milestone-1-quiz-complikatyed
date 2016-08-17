@@ -10,7 +10,7 @@ namespace SimpleCalculator
     {
         static void Main(string[] args)
         {
-
+            List<int> leftList = new List<int>();
             int counter = 0;
 
             Console.WriteLine("CALCULATE ALL THE THINGS!");
@@ -37,7 +37,9 @@ namespace SimpleCalculator
                     Console.WriteLine("You asked me to calculate " + userRequest);
                     Expression expression = new Expression();
                     Console.WriteLine("The operator in this expression is " + expression.getOperator(userRequest));
-                    
+                    Console.WriteLine("The left hand operand is: " + expression.getLeft(userRequest));
+                    Console.WriteLine("The right hand operand is: " + expression.getRight(userRequest));
+                    Console.WriteLine("The answer is: " + expression.getAnswer(expression.convertString(expression.getLeft(userRequest)), expression.convertString(expression.getRight(userRequest)), expression.getOperator(userRequest)));
                     counter = counter + 1;
                 }
 

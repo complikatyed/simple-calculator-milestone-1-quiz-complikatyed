@@ -21,14 +21,14 @@ namespace SimpleCalculator.Tests
         public void LHSCanBeExtracted()
         {
             string lhs = expression.getLeft(testRequest1);
-            Assert.AreEqual(string, lhs);
+            Assert.AreEqual("2", lhs);
         }
 
         [TestMethod]
         public void RHSCanBeExtracted()
         {
             string rhs = expression.getRight(testRequest1);
-            Assert.AreEqual("2", rhs);
+            Assert.AreEqual("3", rhs);
         }
 
         [TestMethod]

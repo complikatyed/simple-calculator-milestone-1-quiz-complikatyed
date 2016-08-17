@@ -14,42 +14,125 @@ namespace SimpleCalculator
         public string rhs { get; set; }
         public string calcThing { get; set; }
         public int convertedString { get; set; }
+        public string rightOperand { get; set; }
+        public string leftOperand { get; set; }
+        public int expressionAnswer { get; set; }
 
-
-       public string getOperator(string userRequest)
-       {
-            char[] chars = { '+', '-', '/', '%', '*'};
+        public int getOperatorIndex(string userRequest)
+        {
+            char[] chars = { '+', '-', '/', '%', '*' };
             // "Look for the index of any character in the above array"
-            int i = userRequest.IndexOfAny(chars);
-            // "Give me the character at the index you found
-            calcThing = userRequest[i].ToString();
+            int index = userRequest.IndexOfAny(chars);
+
+            return index;
+        }
+
+        public string getOperator(string userRequest)
+       {
+            // Run 'getOperatorIndex' and return the item at that index as a string
+            calcThing = userRequest[getOperatorIndex(userRequest)].ToString();
 
             //  DO I NEED TO CONVERT THIS IN ANY WAY FOR IT TO WORK AS AN OPERATOR?
-
             return calcThing;
        }
 
        public string getLeft(string userRequest)
         {
-            // PLAN FOR THIS METHOD IS TO TAKE ALL THE CHARACTERS TO THE LEFT
-            // OF THE OPERATOR'S INDEX (FROM THE METHOD ABOVE) AND RETURN THEM
-            // -- WILL NEED TO TRIM ANY TRAILING WHITE SPACE BEFORE RETURN --
-            // **NOT** converting to int at this point in the process
-            return lhs;
+            // 'thatIndex' is the operator's index
+            int thatIndex = getOperatorIndex(userRequest);
+
+            // instantiate new string list for storing the left side operand
+            List<string> myIntList = new List<string>();
+
+            // iterate through the string (to index of operator) adding each number to the list
+            for (var i = 0; i < thatIndex; i++ )
+            {
+                myIntList.Add(userRequest[i].ToString());
+            }
+
+            // concatenate the list into a string (with trailing white space trimmed)
+            string leftOperand = String.Concat(myIntList).Trim();
+
+            return leftOperand;
         }
 
         public string getRight(string userRequest)
         {
-            // SIMLARLY, THE PLAN FOR THIS METHOD IS TO TAKE ALL THE CHARACTERS TO THE
-            // RIGHT OF THE OPERATOR'S INDEX (FROM THE METHOD ABOVE) AND RETURN THEM
-            // -- WILL NEED TO TRIM ANY LEADING WHITE SPACE --
-            // **NOT** converting to int at this point in the process
-            return rhs;
+            // 'thatIndex' is the operator's index
+            int thatIndex = getOperatorIndex(userRequest);
+
+            // instantiate new string list for storing the left side operand
+            List<string> myIntList = new List<string>();
+
+            // iterate through the string (to index of operator) adding each number to the list
+            for (var i = thatIndex + 1; i < userRequest.Length; i++)
+            {
+                myIntList.Add(userRequest[i].ToString());
+            }
+
+            // concatenate the list into a string (with trailing white space trimmed)
+            string rightOperand = String.Concat(myIntList).Trim();
+
+
+            return rightOperand;
         }
 
         public int convertString(string operand)
         {
+            var convertedString = 0;  // A temporary variable used later for storing the user's input (after it has been converted to int)
+
+            // TryParse method follows -- attempts to convert user's input to an integer
+            // If the number will not parse, an error message is returned.
+            bool result = Int32.TryParse(operand, out convertedString);
+            if (result)
+            {
+               // Console.WriteLine("Converted '{0}' to {1}.", operand, convertedString);
+            }
+            else
+            {
+                //            if (value == null) value = ""; 
+               // Console.WriteLine("Attempted conversion of '{0}' failed. Please input a number.", operand == null ? "<null>" :convertedString);
+            }
+
             return convertedString;
+        }
+
+        public int getAnswer(int convertedOperand1, int convertedOperand2, string calcThing)
+        {
+            int x = convertedOperand1;
+            int y = convertedOperand2;
+            int expressionAnswer = 0;
+
+            switch(calcThing)
+            {
+                case "+":
+                    {
+                        expressionAnswer = x + y;
+                        break;
+                    }
+                case "-":
+                    {
+                        expressionAnswer = x - y;
+                        break;
+                    }
+                case "*":
+                    {
+                        expressionAnswer = x * y;
+                        break;
+                    }
+                case "/":
+                    {
+                        expressionAnswer = x / y;
+                        break;
+                    }
+                case "%":
+                    {
+                        expressionAnswer = x % y;
+                        break;
+                    }
+            }
+
+            return expressionAnswer;
         }
 
     }
