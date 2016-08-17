@@ -14,7 +14,9 @@ namespace SimpleCalculator
         public string rhs { get; set; }
         public string calcThing { get; set; }
         public int convertedString { get; set; }
-
+        public string rightOperand { get; set; }
+        public string leftOperand { get; set; }
+        public int expressionAnswer { get; set; }
 
         public int getOperatorIndex(string userRequest)
         {
@@ -77,7 +79,60 @@ namespace SimpleCalculator
 
         public int convertString(string operand)
         {
+            var convertedString = 0;  // A temporary variable used later for storing the user's input (after it has been converted to int)
+
+            // TryParse method follows -- attempts to convert user's input to an integer
+            // If the number will not parse, an error message is returned.
+            bool result = Int32.TryParse(operand, out convertedString);
+            if (result)
+            {
+               // Console.WriteLine("Converted '{0}' to {1}.", operand, convertedString);
+            }
+            else
+            {
+                //            if (value == null) value = ""; 
+               // Console.WriteLine("Attempted conversion of '{0}' failed. Please input a number.", operand == null ? "<null>" :convertedString);
+            }
+
             return convertedString;
+        }
+
+        public int getAnswer(int convertedOperand1, int convertedOperand2, string calcThing)
+        {
+            int x = convertedOperand1;
+            int y = convertedOperand2;
+            int expressionAnswer = 0;
+
+            switch(calcThing)
+            {
+                case "+":
+                    {
+                        expressionAnswer = x + y;
+                        break;
+                    }
+                case "-":
+                    {
+                        expressionAnswer = x - y;
+                        break;
+                    }
+                case "*":
+                    {
+                        expressionAnswer = x * y;
+                        break;
+                    }
+                case "/":
+                    {
+                        expressionAnswer = x / y;
+                        break;
+                    }
+                case "%":
+                    {
+                        expressionAnswer = x % y;
+                        break;
+                    }
+            }
+
+            return expressionAnswer;
         }
 
     }
