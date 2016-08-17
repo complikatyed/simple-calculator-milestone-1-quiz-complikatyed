@@ -37,7 +37,8 @@ namespace SimpleCalculator
                     Console.WriteLine("You asked me to calculate " + userRequest);
                     Expression expression = new Expression();
                     Console.WriteLine("The operator in this expression is " + expression.getOperator(userRequest));
-                    Console.WriteLine("The length of the string is: " + expression.getLeft(userRequest));
+                    Console.WriteLine("The left hand operand is: " + expression.getLeft(userRequest));
+                    Console.WriteLine("The right hand operand is: " + expression.getRight(userRequest));
                     counter = counter + 1;
                 }
 
