@@ -16,7 +16,7 @@ namespace SimpleCalculator
         public int convertedString { get; set; }
         public string rightOperand { get; set; }
         public string leftOperand { get; set; }
-        public int expressionAnswer { get; set; }
+
 
         public int getOperatorIndex(string userRequest)
         {
@@ -95,44 +95,6 @@ namespace SimpleCalculator
             }
 
             return convertedString;
-        }
-
-        public int getAnswer(int convertedOperand1, int convertedOperand2, string calcThing)
-        {
-            int x = convertedOperand1;
-            int y = convertedOperand2;
-            int expressionAnswer = 0;
-
-            switch(calcThing)
-            {
-                case "+":
-                    {
-                        expressionAnswer = x + y;
-                        break;
-                    }
-                case "-":
-                    {
-                        expressionAnswer = x - y;
-                        break;
-                    }
-                case "*":
-                    {
-                        expressionAnswer = x * y;
-                        break;
-                    }
-                case "/":
-                    {
-                        expressionAnswer = x / y;
-                        break;
-                    }
-                case "%":
-                    {
-                        expressionAnswer = x % y;
-                        break;
-                    }
-            }
-
-            return expressionAnswer;
         }
 
     }
