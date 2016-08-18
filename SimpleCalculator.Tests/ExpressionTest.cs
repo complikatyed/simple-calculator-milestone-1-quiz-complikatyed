@@ -38,6 +38,10 @@ namespace SimpleCalculator.Tests
             Assert.AreEqual(42, newOperand);
         }
 
+        // NEED TO ADD TEST FOR BAD EXPRESSION
+
+        // NEED TO ADD TESTS FOR NEGATIVE OPERANDS
+
 
     }
 }
