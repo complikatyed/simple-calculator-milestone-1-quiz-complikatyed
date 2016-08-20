@@ -8,6 +8,8 @@ namespace SimpleCalculator.Tests
     {
         Expression expression = new Expression();
         string testRequest1 = "2 + 3";
+        string testRequest2 = "-2 + 3";
+        string testRequest3 = "2 + -3";
         string operandString = "42";
 
         [TestMethod]
@@ -38,9 +40,23 @@ namespace SimpleCalculator.Tests
             Assert.AreEqual(42, newOperand);
         }
 
-        // NEED TO ADD TEST FOR BAD EXPRESSION
+        [TestMethod]
+        public void LHSCanBeNegative()
+        {
+            string lhs = expression.getLeft(testRequest2);
+            Assert.AreEqual("-2", lhs);
+        }
+
+        [TestMethod]
+        public void RHSCanBeNegative()
+        {
+            string rhs = expression.getRight(testRequest3);
+            Assert.AreEqual("-3", rhs);
+        }
 
         // NEED TO ADD TESTS FOR NEGATIVE OPERANDS
+
+        // NEED TO ADD TEST FOR BAD EXPRESSION
 
 
     }
