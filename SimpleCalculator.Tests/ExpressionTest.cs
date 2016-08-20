@@ -54,7 +54,6 @@ namespace SimpleCalculator.Tests
             Assert.AreEqual("-3", rhs);
         }
 
-        // NEED TO ADD TESTS FOR NEGATIVE OPERANDS
 
         // NEED TO ADD TEST FOR BAD EXPRESSION
 
