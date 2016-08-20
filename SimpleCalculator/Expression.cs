@@ -17,12 +17,22 @@ namespace SimpleCalculator
         public string rightOperand { get; set; }
         public string leftOperand { get; set; }
 
+        // if the index of calcThing is 0, go around again...
 
         public int getOperatorIndex(string userRequest)
         {
             char[] chars = { '+', '-', '/', '%', '*' };
             // "Look for the index of any character in the above array"
             int index = userRequest.IndexOfAny(chars);
+
+            if (userRequest.StartsWith("-"))
+            {
+                index = userRequest.IndexOfAny(chars, 1);
+            }
+            else
+            {
+                index = userRequest.IndexOfAny(chars);
+            }
 
             return index;
         }
