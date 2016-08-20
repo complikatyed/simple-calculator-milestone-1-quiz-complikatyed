@@ -12,12 +12,24 @@ namespace SimpleCalculator
 
         public string lhs { get; set; }
         public string rhs { get; set; }
+        public int thatIndex { get; set; }
         public string calcThing { get; set; }
         public int convertedString { get; set; }
         public string rightOperand { get; set; }
         public string leftOperand { get; set; }
 
         // if the index of calcThing is 0, go around again...
+
+        public bool confirmGoodOperator(int thatIndex)
+        {
+            bool goodOperator = true;
+
+            if (thatIndex == -1)
+            {
+                goodOperator = false;
+            }
+            return goodOperator;
+        }
 
         public int getOperatorIndex(string userRequest)
         {
@@ -29,6 +41,11 @@ namespace SimpleCalculator
             {
                 index = userRequest.IndexOfAny(chars, 1);
             }
+            else if ( userRequest.StartsWith("+") || userRequest.StartsWith("*") || userRequest.StartsWith("/") || userRequest.StartsWith("%"))
+            {
+                throw new ArgumentException(string.Format("{0} is not a valid operand", userRequest),
+                                      "num");
+            }
             else
             {
                 index = userRequest.IndexOfAny(chars);
@@ -37,33 +54,42 @@ namespace SimpleCalculator
             return index;
         }
 
-        public string getOperator(string userRequest)
+        // while confirmGoodOperator() is false, keep prompting for a new value and THEN call the getOperator() method
+
+       public string getOperator(string userRequest)
        {
-            // Run 'getOperatorIndex' and return the item at that index as a string
+        // Run 'getOperatorIndex' and return the item at that index as a string
             calcThing = userRequest[getOperatorIndex(userRequest)].ToString();
 
-            //  DO I NEED TO CONVERT THIS IN ANY WAY FOR IT TO WORK AS AN OPERATOR?
             return calcThing;
        }
 
        public string getLeft(string userRequest)
         {
             // 'thatIndex' is the operator's index
-            int thatIndex = getOperatorIndex(userRequest);
-
-            // instantiate new string list for storing the left side operand
-            List<string> myIntList = new List<string>();
-
-            // iterate through the string (to index of operator) adding each number to the list
-            for (var i = 0; i < thatIndex; i++ )
+            try
             {
-                myIntList.Add(userRequest[i].ToString());
+                int thatIndex = getOperatorIndex(userRequest);
+                // instantiate new string list for storing the left side operand
+                List<string> myIntList = new List<string>();
+
+                // iterate through the string (to index of operator) adding each number to the list
+                for (var i = 0; i < thatIndex; i++)
+                {
+                    myIntList.Add(userRequest[i].ToString());
+                }
+
+                // concatenate the list into a string (with trailing white space trimmed)
+                string leftOperand = String.Concat(myIntList).Trim();
+
+                return leftOperand;
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine("That's not a valid operand.");
+                return "";
             }
 
-            // concatenate the list into a string (with trailing white space trimmed)
-            string leftOperand = String.Concat(myIntList).Trim();
-
-            return leftOperand;
         }
 
         public string getRight(string userRequest)
