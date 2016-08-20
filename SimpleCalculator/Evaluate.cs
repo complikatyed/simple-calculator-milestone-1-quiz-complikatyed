@@ -13,35 +13,35 @@ namespace SimpleCalculator
 
         public int getAnswer(int convertedOperand1, int convertedOperand2, string calcThing)
         {
-            int x = convertedOperand1;
-            int y = convertedOperand2;
+            int lhs = convertedOperand1;
+            int rhs = convertedOperand2;
             int expressionAnswer = 0;
 
             switch (calcThing)
             {
                 case "+":
                 {
-                    expressionAnswer = x + y;
+                    expressionAnswer = lhs + rhs;
                     break;
                 }
                 case "-":
                 {
-                    expressionAnswer = x - y;
+                    expressionAnswer = lhs - rhs;
                     break;
                 }
                 case "*":
                 {
-                    expressionAnswer = x * y;
+                    expressionAnswer = lhs * rhs;
                     break;
                 }
                 case "/":
                 {
-                    expressionAnswer = x / y;
+                    expressionAnswer = lhs / rhs;
                     break;
                 }
                 case "%":
                 {
-                    expressionAnswer = x % y;
+                    expressionAnswer = lhs % rhs;
                     break;
                 }
             }
