@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SimpleCalculator
 {
-    public class Storage : Expression
+    public class Stack : Expression
     {
         string lastQuery { get; set; }
         int lastAnswer { get; set; }
