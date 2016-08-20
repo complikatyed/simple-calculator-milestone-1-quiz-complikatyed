@@ -16,12 +16,12 @@ namespace SimpleCalculator
             Console.WriteLine("CALCULATE ALL THE THINGS!");
 
             bool goAgain = true;
-            Storage storage = new Storage();
+            Stack stack = new Stack();
             string lastQuery = "No query made yet";
+
 
             while (goAgain)  // This loop allows the user to continue playing
             {
-
                 string prompt = "[" + counter + "]> ";
 
                 Console.Write(prompt);
@@ -36,30 +36,47 @@ namespace SimpleCalculator
                 }
                 else if (userRequest == "lastq")
                 {
-                    Console.WriteLine("The last query was " + storage.getLastQuery());
+                    Console.WriteLine("The last query was " + stack.getLastQuery());
+                    counter = counter + 1;
                 }
                 else if (userRequest == "last")
                 {
-                    Console.WriteLine("The last answer was " + storage.getLastAnswer());
+                    Console.WriteLine("The last answer was " + stack.getLastAnswer());
+                    counter = counter + 1;
                 }   
                 else
                 {
-                    lastQuery = storage.storeLastQuery(userRequest);
+                    lastQuery = stack.storeLastQuery(userRequest);
                     Console.WriteLine("You asked me to calculate " + userRequest);
                     Expression expression = new Expression();
                     Evaluate evaluate = new Evaluate();
 
-                    //Console.WriteLine("The operator in this expression is " + expression.getOperator(userRequest));
-                    //Console.WriteLine("The left hand operand is: " + expression.getLeft(userRequest));
-                    //Console.WriteLine("The right hand operand is: " + expression.getRight(userRequest));
-                    int answer = evaluate.getAnswer(expression.convertString(expression.getLeft(userRequest)), expression.convertString(expression.getRight(userRequest)), expression.getOperator(userRequest));
-                    int lastAnswer = storage.storeLastAnswer(answer);
-                    Console.WriteLine("The answer is: " + answer);
+                    // NEED TO ADD CHECKER FOR VALID LEFT HAND OPERAND AND INCLUDE IT IN THIS WHILE LOOP BELOW
+
+                    while (!expression.confirmGoodOperator(expression.getOperatorIndex(userRequest)))
+                    {
+                        Console.WriteLine("Give me an expression I can work with, please.");
+                        userRequest = Console.ReadLine().ToLower();
+
+                    }
+
+                    int expressionAnswer = evaluate.getAnswer(
+                        expression.convertString(expression.getLeft(userRequest)),
+                        expression.convertString(expression.getRight(userRequest)
+                        ), expression.getOperator(userRequest));
+
+                    int lastAnswer = stack.storeLastAnswer(expressionAnswer);
+                    Console.WriteLine("The answer is: " + expressionAnswer);
                     counter = counter + 1;
+
+                    }
+
+
+
                 }
 
             }
-            Console.WriteLine("");
+            //Console.WriteLine("");
         }
     }
-}
+

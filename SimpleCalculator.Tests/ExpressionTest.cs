@@ -10,6 +10,8 @@ namespace SimpleCalculator.Tests
         string testRequest1 = "2 + 3";
         string testRequest2 = "-2 + 3";
         string testRequest3 = "2 + -3";
+        string testRequest4 = "+4";
+        string testRequest5 = "5 _ 4";
         string operandString = "42";
 
         [TestMethod]
@@ -54,8 +56,22 @@ namespace SimpleCalculator.Tests
             Assert.AreEqual("-3", rhs);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void BadLHSThrowsException()
+        {
+            int index = expression.getOperatorIndex(testRequest4);
+        }
 
-        // NEED TO ADD TEST FOR BAD EXPRESSION
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void NoOperatorThrowsException()
+        {
+            int index = expression.getOperatorIndex(testRequest5);
+        }
+
+
+
 
 
     }
