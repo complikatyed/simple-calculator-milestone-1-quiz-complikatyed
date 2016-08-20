@@ -16,6 +16,8 @@ namespace SimpleCalculator
             Console.WriteLine("CALCULATE ALL THE THINGS!");
 
             bool goAgain = true;
+            Storage storage = new Storage();
+            string lastQuery = "No query made yet";
 
             while (goAgain)  // This loop allows the user to continue playing
             {
@@ -32,15 +34,27 @@ namespace SimpleCalculator
                     Console.ReadLine();
                     return;
                 }
+                else if (userRequest == "lastq")
+                {
+                    Console.WriteLine("The last query was " + storage.getLastQuery());
+                }
+                else if (userRequest == "last")
+                {
+                    Console.WriteLine("The last answer was " + storage.getLastAnswer());
+                }   
                 else
                 {
+                    lastQuery = storage.storeLastQuery(userRequest);
                     Console.WriteLine("You asked me to calculate " + userRequest);
                     Expression expression = new Expression();
                     Evaluate evaluate = new Evaluate();
-                    Console.WriteLine("The operator in this expression is " + expression.getOperator(userRequest));
-                    Console.WriteLine("The left hand operand is: " + expression.getLeft(userRequest));
-                    Console.WriteLine("The right hand operand is: " + expression.getRight(userRequest));
-                    Console.WriteLine("The answer is: " + evaluate.getAnswer(expression.convertString(expression.getLeft(userRequest)), expression.convertString(expression.getRight(userRequest)), expression.getOperator(userRequest)));
+
+                    //Console.WriteLine("The operator in this expression is " + expression.getOperator(userRequest));
+                    //Console.WriteLine("The left hand operand is: " + expression.getLeft(userRequest));
+                    //Console.WriteLine("The right hand operand is: " + expression.getRight(userRequest));
+                    int answer = evaluate.getAnswer(expression.convertString(expression.getLeft(userRequest)), expression.convertString(expression.getRight(userRequest)), expression.getOperator(userRequest));
+                    int lastAnswer = storage.storeLastAnswer(answer);
+                    Console.WriteLine("The answer is: " + answer);
                     counter = counter + 1;
                 }
 
