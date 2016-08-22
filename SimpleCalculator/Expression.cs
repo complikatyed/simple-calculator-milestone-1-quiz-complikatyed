@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SimpleCalculator
@@ -31,6 +32,7 @@ namespace SimpleCalculator
             return goodOperator;
         }
 
+
         public int getOperatorIndex(string userRequest)
         {
             char[] chars = { '+', '-', '/', '%', '*' };
@@ -41,11 +43,7 @@ namespace SimpleCalculator
             {
                 index = userRequest.IndexOfAny(chars, 1);
             }
-            else if ( userRequest.StartsWith("+") || userRequest.StartsWith("*") || userRequest.StartsWith("/") || userRequest.StartsWith("%"))
-            {
-                throw new ArgumentException(string.Format("{0} is not a valid operand", userRequest),
-                                      "num");
-            }
+
             else
             {
                 index = userRequest.IndexOfAny(chars);
@@ -54,7 +52,6 @@ namespace SimpleCalculator
             return index;
         }
 
-        // while confirmGoodOperator() is false, keep prompting for a new value and THEN call the getOperator() method
 
        public string getOperator(string userRequest)
        {
@@ -67,30 +64,52 @@ namespace SimpleCalculator
        public string getLeft(string userRequest)
         {
             // 'thatIndex' is the operator's index
-            try
+
+            int thatIndex = getOperatorIndex(userRequest);
+            // instantiate new string list for storing the left side operand
+            List<string> myIntList = new List<string>();
+
+            // iterate through the string (to index of operator) adding each number to the list
+            for (var i = 0; i < thatIndex; i++)
             {
-                int thatIndex = getOperatorIndex(userRequest);
-                // instantiate new string list for storing the left side operand
-                List<string> myIntList = new List<string>();
-
-                // iterate through the string (to index of operator) adding each number to the list
-                for (var i = 0; i < thatIndex; i++)
-                {
-                    myIntList.Add(userRequest[i].ToString());
-                }
-
-                // concatenate the list into a string (with trailing white space trimmed)
-                string leftOperand = String.Concat(myIntList).Trim();
-
-                return leftOperand;
+                myIntList.Add(userRequest[i].ToString());
             }
-            catch (ArgumentException e)
-            {
-                Console.WriteLine("That's not a valid operand.");
-                return "";
-            }
+
+            // concatenate the list into a string (with trailing white space trimmed)
+            string leftOperand = String.Concat(myIntList).Trim();
+
+            return leftOperand;
 
         }
+
+        public bool confirmGoodLeft(string leftOperand)
+        {
+            string pattern1 = @"\W";
+            Regex rgx = new Regex(pattern1);
+
+            bool checkedLeftOperand = true;
+
+            if (rgx.IsMatch(leftOperand))
+            {
+                checkedLeftOperand = false;
+            }
+            return checkedLeftOperand;
+        }
+
+        public bool confirmGoodRight(string rightOperand)
+        {
+            string pattern2 = @"\W";
+            Regex rgx = new Regex(pattern2);
+
+            bool checkedRightOperand = true;
+
+            if (rgx.IsMatch(rightOperand))
+            {
+                checkedRightOperand = false;
+            }
+            return checkedRightOperand;
+        }
+
 
         public string getRight(string userRequest)
         {
@@ -108,8 +127,7 @@ namespace SimpleCalculator
 
             // concatenate the list into a string (with trailing white space trimmed)
             string rightOperand = String.Concat(myIntList).Trim();
-
-
+        
             return rightOperand;
         }
 

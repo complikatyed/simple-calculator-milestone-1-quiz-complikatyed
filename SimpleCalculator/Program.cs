@@ -51,15 +51,26 @@ namespace SimpleCalculator
                     Expression expression = new Expression();
                     Evaluate evaluate = new Evaluate();
 
-                    // NEED TO ADD CHECKER FOR VALID LEFT HAND OPERAND AND INCLUDE IT IN THIS WHILE LOOP BELOW
+                    // Checks to see if the operator and the left hand operand are both viable
 
-                    while (!expression.confirmGoodOperator(expression.getOperatorIndex(userRequest)))
+                   while (!expression.confirmGoodOperator(expression.getOperatorIndex(userRequest)) ||
+                         !expression.confirmGoodLeft(expression.getLeft(userRequest)) ||
+                         !expression.confirmGoodRight(expression.getRight(userRequest)))
                     {
-                        Console.WriteLine("Give me an expression I can work with, please.");
+
+                        Console.WriteLine("That won't work. Please enter a valid expression.");
                         userRequest = Console.ReadLine().ToLower();
+                        if (userRequest == "exit")
+                        {
+                            return;
+                        }
 
                     }
 
+                    // Stores the last viable query
+                    lastQuery = stack.storeLastQuery(userRequest);
+
+                    // Calls getAnswer() to evaluate the expression
                     int expressionAnswer = evaluate.getAnswer(
                         expression.convertString(expression.getLeft(userRequest)),
                         expression.convertString(expression.getRight(userRequest)
