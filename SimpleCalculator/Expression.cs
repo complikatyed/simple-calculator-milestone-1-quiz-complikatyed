@@ -10,7 +10,6 @@ namespace SimpleCalculator
     public class Expression
 
     {
-
         public string lhs { get; set; }
         public string rhs { get; set; }
         public int thatIndex { get; set; }
@@ -18,19 +17,6 @@ namespace SimpleCalculator
         public int convertedString { get; set; }
         public string rightOperand { get; set; }
         public string leftOperand { get; set; }
-
-        // if the index of calcThing is 0, go around again...
-
-        public bool confirmGoodOperator(int thatIndex)
-        {
-            bool goodOperator = true;
-
-            if (thatIndex == -1)
-            {
-                goodOperator = false;
-            }
-            return goodOperator;
-        }
 
 
         public int getOperatorIndex(string userRequest)
@@ -47,6 +33,15 @@ namespace SimpleCalculator
             else
             {
                 index = userRequest.IndexOfAny(chars);
+                if (index == 0)
+                {
+                    throw new ArgumentException("You can't start your expression with an operator. Please try again.");
+                }
+
+                else if (index == -1)  // If you don't find a valid operator in the expression...
+                {
+                    throw new ArgumentException("You don't have a valid operator here. Please try again.");
+                }
             }
 
             return index;
@@ -55,7 +50,7 @@ namespace SimpleCalculator
 
        public string getOperator(string userRequest)
        {
-        // Run 'getOperatorIndex' and return the item at that index as a string
+            // Run 'getOperatorIndex' and return the item at that index as a string
             calcThing = userRequest[getOperatorIndex(userRequest)].ToString();
 
             return calcThing;
@@ -64,8 +59,8 @@ namespace SimpleCalculator
        public string getLeft(string userRequest)
         {
             // 'thatIndex' is the operator's index
-
             int thatIndex = getOperatorIndex(userRequest);
+
             // instantiate new string list for storing the left side operand
             List<string> myIntList = new List<string>();
 
@@ -78,57 +73,40 @@ namespace SimpleCalculator
             // concatenate the list into a string (with trailing white space trimmed)
             string leftOperand = String.Concat(myIntList).Trim();
 
-            return leftOperand;
-
+            return confirmGoodOperand(leftOperand);
         }
 
-        public bool confirmGoodLeft(string leftOperand)
-        {
-            string pattern1 = @"\W";
-            Regex rgx = new Regex(pattern1);
-
-            bool checkedLeftOperand = true;
-
-            if (rgx.IsMatch(leftOperand))
-            {
-                checkedLeftOperand = false;
-            }
-            return checkedLeftOperand;
-        }
-
-        public bool confirmGoodRight(string rightOperand)
-        {
-            string pattern2 = @"\W";
-            Regex rgx = new Regex(pattern2);
-
-            bool checkedRightOperand = true;
-
-            if (rgx.IsMatch(rightOperand))
-            {
-                checkedRightOperand = false;
-            }
-            return checkedRightOperand;
-        }
 
 
         public string getRight(string userRequest)
         {
-            // 'thatIndex' is the operator's index
             int thatIndex = getOperatorIndex(userRequest);
 
-            // instantiate new string list for storing the left side operand
             List<string> myIntList = new List<string>();
 
-            // iterate through the string (to index of operator) adding each number to the list
             for (var i = thatIndex + 1; i < userRequest.Length; i++)
             {
                 myIntList.Add(userRequest[i].ToString());
             }
-
-            // concatenate the list into a string (with trailing white space trimmed)
             string rightOperand = String.Concat(myIntList).Trim();
-        
-            return rightOperand;
+
+            return confirmGoodOperand(rightOperand);
+        }
+
+        // Checks to make sure the operands are viable and throw exception if they are not.
+        public string confirmGoodOperand(string operand)
+        {
+            string pattern1 = @"\W";
+            Regex rgx = new Regex(pattern1);
+
+            if (rgx.IsMatch(operand))
+            {
+                throw new ArgumentException(String.Format("{0} is not a valid operand. Please try again.", operand));
+            }
+            else
+            {
+                return operand;
+            }
         }
 
         public int convertString(string operand)
