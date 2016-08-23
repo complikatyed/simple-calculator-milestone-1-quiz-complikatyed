@@ -96,10 +96,16 @@ namespace SimpleCalculator
         // Checks to make sure the operands are viable and throw exception if they are not.
         public string confirmGoodOperand(string operand)
         {
-            string pattern1 = @"\W";
-            Regex rgx = new Regex(pattern1);
+            string pattern1 = @"-";
+            string pattern2 = @"\W";
+            Regex minus = new Regex(pattern1);
+            Regex rgx = new Regex(pattern2);
 
-            if (rgx.IsMatch(operand))
+            if (minus.IsMatch(operand))
+            {
+                return operand;
+            }
+            else if (rgx.IsMatch(operand))
             {
                 throw new ArgumentException(String.Format("{0} is not a valid operand. Please try again.", operand));
             }
