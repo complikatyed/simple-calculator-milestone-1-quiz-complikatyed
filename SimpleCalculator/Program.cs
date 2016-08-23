@@ -43,7 +43,7 @@ namespace SimpleCalculator
                 {
                     Console.WriteLine("The last answer was " + stack.getLastAnswer());
                     counter = counter + 1;
-                }   
+                }
                 else
                 {
                     lastQuery = stack.storeLastQuery(userRequest);
@@ -51,32 +51,40 @@ namespace SimpleCalculator
                     Expression expression = new Expression();
                     Evaluate evaluate = new Evaluate();
 
-                    // NEED TO ADD CHECKER FOR VALID LEFT HAND OPERAND AND INCLUDE IT IN THIS WHILE LOOP BELOW
+                    // Checks to see if the operator and the left hand operand are both viable
 
-                    while (!expression.confirmGoodOperator(expression.getOperatorIndex(userRequest)))
+                    bool calculate = true;
+
+                    while (calculate)
                     {
-                        Console.WriteLine("Give me an expression I can work with, please.");
-                        userRequest = Console.ReadLine().ToLower();
+                        try
+                        {
+                            int expressionAnswer = evaluate.getAnswer(
+                                expression.convertString(expression.getLeft(userRequest)),
+                                expression.convertString(expression.getRight(userRequest)
+                                ), expression.getOperator(userRequest));
+
+                            lastQuery = stack.storeLastQuery(userRequest);
+
+                            int lastAnswer = stack.storeLastAnswer(expressionAnswer);
+                            Console.WriteLine("The answer is: " + expressionAnswer);
+                            calculate = false;
+                            counter = counter + 1;
+
+                        }
+                        catch (ArgumentException e)
+                        {
+                            Console.WriteLine("{0}: {1}", e.GetType().Name, e.Message);
+                            calculate = false;
+                        }
 
                     }
-
-                    int expressionAnswer = evaluate.getAnswer(
-                        expression.convertString(expression.getLeft(userRequest)),
-                        expression.convertString(expression.getRight(userRequest)
-                        ), expression.getOperator(userRequest));
-
-                    int lastAnswer = stack.storeLastAnswer(expressionAnswer);
-                    Console.WriteLine("The answer is: " + expressionAnswer);
-                    counter = counter + 1;
-
-                    }
-
-
 
                 }
 
             }
-            //Console.WriteLine("");
+            Console.WriteLine("");
         }
     }
+}
 
