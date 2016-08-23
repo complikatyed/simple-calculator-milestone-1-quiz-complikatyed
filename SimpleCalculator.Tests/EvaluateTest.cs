@@ -49,16 +49,28 @@ namespace SimpleCalculator.Tests
         }
 
         [TestMethod]
+        public void SubtractCanResultInNegatives()
+        {
+            Evaluate evaluate = new Evaluate();
+            int ourAnswer = evaluate.getAnswer(7, 12, "-");
+            Assert.AreEqual(-5, ourAnswer);
+        }
+
+        [TestMethod]
+        public void SubtractCanManageLeftNegatives()
+        {
+            Evaluate evaluate = new Evaluate();
+            int ourAnswer = evaluate.getAnswer(-7, 12, "-");
+            Assert.AreEqual(-19, ourAnswer);
+        }
+
+        [TestMethod]
         public void getAnswerCanModulo()
         {
             Evaluate evaluate = new Evaluate();
             int ourAnswer = evaluate.getAnswer(9, 6, "%");
             Assert.AreEqual(3, ourAnswer);
         }
-
-        // NEED TO ADD TEST FOR BAD EXPRESSION
-
-        // NEED TO ADD TESTS FOR NEGATIVE OPERANDS
 
     }
 }
